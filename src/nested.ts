@@ -38,6 +38,12 @@ export function findQuestion(
     questions: Question[],
     id: number,
 ): Question | null {
+    const questionNumber = questions.findIndex(
+        (question: Question): boolean => question.id === id,
+    );
+    if (questionNumber > -1) {
+        return questions[questionNumber];
+    }
     return null;
 }
 
@@ -46,7 +52,10 @@ export function findQuestion(
  * with the given `id`.
  */
 export function removeQuestion(questions: Question[], id: number): Question[] {
-    return [];
+    const remainingQuestions: Question[] = questions.filter(
+        (question: Question): boolean => question.id !== id,
+    );
+    return remainingQuestions;
 }
 
 /***
@@ -54,21 +63,31 @@ export function removeQuestion(questions: Question[], id: number): Question[] {
  * questions, as an array.
  */
 export function getNames(questions: Question[]): string[] {
-    return [];
+    const questionNames: string[] = questions.map(
+        (question: Question): string => question.name,
+    );
+    return questionNames;
 }
 
 /***
  * Consumes an array of questions and returns the sum total of all their points added together.
  */
 export function sumPoints(questions: Question[]): number {
-    return 0;
+    const pointTotal: number = questions
+        .map((question: Question): number => question.points)
+        .reduce(
+            (currentTotal: number, point: number) => (currentTotal += point),
+            0,
+        );
+    return pointTotal;
 }
 
 /***
  * Consumes an array of questions and returns the sum total of the PUBLISHED questions.
  */
 export function sumPublishedPoints(questions: Question[]): number {
-    return 0;
+    const publishedPoints: number = sumPoints(getPublishedQuestions(questions));
+    return publishedPoints;
 }
 
 /***
