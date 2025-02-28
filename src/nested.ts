@@ -228,13 +228,46 @@ export function changeQuestionTypeById(
  * Remember, if a function starts getting too complicated, think about how a helper function
  * can make it simpler! Break down complicated tasks into little pieces.
  */
+
+function editOptionHelper(
+    question: Question,
+    targetId: number,
+    targetOptionIndex: number,
+    newOption: string,
+): Question {
+    if (question.id === targetId) {
+        if (targetOptionIndex === -1) {
+            const editedQuestion: Question = {
+                ...question,
+                options: [...question.options, newOption],
+            };
+            return editedQuestion;
+        } else {
+            const splicedOptions = [...question.options];
+            splicedOptions.splice(targetOptionIndex, 1, newOption);
+            const editedQuestion: Question = {
+                ...question,
+                options: splicedOptions,
+            };
+            return editedQuestion;
+        }
+    } else {
+        const editedQuestion: Question = { ...question };
+        return editedQuestion;
+    }
+}
+
 export function editOption(
     questions: Question[],
     targetId: number,
     targetOptionIndex: number,
     newOption: string,
 ): Question[] {
-    return [];
+    const editedQuestions = questions.map(
+        (question: Question): Question =>
+            editOptionHelper(question, targetId, targetOptionIndex, newOption),
+    );
+    return editedQuestions;
 }
 
 /***
