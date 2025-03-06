@@ -16,9 +16,8 @@ export function TwoDice(): React.JSX.Element {
     const [dieB, rollB] = useState<number>(6);
     return (
         <div>
-            <span>
+            <span data-testid="left-die">
                 <Button
-                    id="left-die"
                     onClick={() => {
                         rollA(d6());
                     }}
@@ -27,9 +26,8 @@ export function TwoDice(): React.JSX.Element {
                 </Button>
                 {dieA}
             </span>
-            <span>
+            <span data-testid="right-die">
                 <Button
-                    id="right-die"
                     onClick={() => {
                         rollB(d6());
                     }}
